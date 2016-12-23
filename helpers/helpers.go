@@ -2,7 +2,6 @@ package helpers
 
 import (
         "net/http"
-        "os"
 
         "github.com/Azure/go-autorest/autorest/azure"
 )
