@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/glennmate/go-azure/helpers"
-  "github.com/Azure/azure-sdk-for-go/arm/resources"
+  "github.com/Azure/azure-sdk-for-go/arm/resources/resources"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/to"
