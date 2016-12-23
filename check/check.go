@@ -45,7 +45,7 @@ func main() {
 		log.Fatalf("Error: %v", err)
 		return
 	}
-
+}
 
 func checkEnvVar(envVars *map[string]string) error {
 	var missingVars []string
