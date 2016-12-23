@@ -1,6 +1,7 @@
 package helpers
 
 import (
+        "fmt"
         "net/http"
 
 	      "github.com/Azure/go-autorest/autorest"
