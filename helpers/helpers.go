@@ -37,3 +37,11 @@ func NewToken(creds map[string]string, scope string) (*azure.ServicePrincipalTok
   }
   return azure.NewServicePrincipalToken(*oauthConfig, creds("AZURE_CLIENT_ID"), creds("AZURE_CLIENT_SECRET"), scope)
 }
+
+func ensureValueStrings(mapOfInterface map[string]interface{}) map[string]string {
+	mapOfStrings := make(map[string]string)
+	for key, value := range mapOfInterface {
+		mapOfStrings[key] = ensureValueString(value)
+	}
+	return mapOfStrings
+}
