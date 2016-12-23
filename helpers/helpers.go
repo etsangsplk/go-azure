@@ -45,3 +45,15 @@ func ensureValueStrings(mapOfInterface map[string]interface{}) map[string]string
 	}
 	return mapOfStrings
 }
+
+func ensureValueString(value interface{}) string {
+	if value == nil {
+		return ""
+	}
+	switch v := value.(type) {
+	case string:
+		return v
+	default:
+		return fmt.Sprintf("%v", v)
+	}
+}
