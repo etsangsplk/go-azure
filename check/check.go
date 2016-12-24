@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	// rgname := os.Getenv("AZURE_RESOURCE_GROUP_NAME")
+	// var resourceGroupName = os.Getenv("AZURE_RESOURCE_GROUP_NAME")
 
 	creds := map[string]string{
 		"AZURE_CLIENT_ID":       os.Getenv("AZURE_CLIENT_ID"),
@@ -37,13 +37,23 @@ func main() {
 
 	accountcreds.RequestInspector = helpers.WithInspection()
 	accountcreds.ResponseInspector = helpers.ByInspecting()
-	// crg, err := accountcreds.CheckExistence(rgname)
+	crg, err := accountcreds.CheckExistence(os.Getenv("AZURE_RESOURCE_GROUP_NAME"))
 
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 		return
 	}
+
+ fmt.Printf("Status is '%s'\n", crg.Response)
+
+//  {
+// 	fmt.Printf("The resource group name '%s' is available\n", rgname)
+// } else {
+// 	fmt.Printf("The resource group name '%s' is unavailable because %s\n", rgname, to.String(crg.Message))
+// }
+
 }
+
 
 func checkEnvVar(envVars *map[string]string) error {
 	var missingVars []string
