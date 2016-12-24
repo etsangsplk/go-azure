@@ -10,7 +10,7 @@ import (
 
 // rest helpers
 
-func withInspection() autorest.PrepareDecorator {
+func WithInspection() autorest.PrepareDecorator {
 	return func(p autorest.Preparer) autorest.Preparer {
 		return autorest.PreparerFunc(func(r *http.Request) (*http.Request, error) {
 			fmt.Printf("Inspecting Request: %s %s\n", r.Method, r.URL)
@@ -19,7 +19,7 @@ func withInspection() autorest.PrepareDecorator {
 	}
 }
 
-func byInspecting() autorest.RespondDecorator {
+func ByInspecting() autorest.RespondDecorator {
 	return func(r autorest.Responder) autorest.Responder {
 		return autorest.ResponderFunc(func(resp *http.Response) error {
 			fmt.Printf("Inspecting Response: %s for %s %s\n", resp.Status, resp.Request.Method, resp.Request.URL)
@@ -31,11 +31,11 @@ func byInspecting() autorest.RespondDecorator {
 // NewToken creates a token using the environmental vars passed during teamcity runs
 
 func NewToken(creds map[string]string, scope string) (*azure.ServicePrincipalToken, error) {
-  oauthConfig, err := azure.PublicCloud.OAuthConfigForTenant(creds("AZURE_TENANT_ID"))
+  oauthConfig, err := azure.PublicCloud.OAuthConfigForTenant(creds["AZURE_TENANT_ID"])
   if err != nil {
           panic(err)
   }
-  return azure.NewServicePrincipalToken(*oauthConfig, creds("AZURE_CLIENT_ID"), creds("AZURE_CLIENT_SECRET"), scope)
+  return azure.NewServicePrincipalToken(*oauthConfig, creds["AZURE_CLIENT_ID"], creds["AZURE_CLIENT_SECRET"], scope)
 }
 
 func ensureValueStrings(mapOfInterface map[string]interface{}) map[string]string {
