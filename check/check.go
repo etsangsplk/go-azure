@@ -3,18 +3,16 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/glennmate/go-azure/helpers"
   "github.com/Azure/azure-sdk-for-go/arm/resources/resources"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/to"
 )
 
 func main() {
-	rgname := os.Getenv("AZURE_RESOURCE_GROUP_NAME")
+	// rgname := os.Getenv("AZURE_RESOURCE_GROUP_NAME")
 
 	creds := map[string]string{
 		"AZURE_CLIENT_ID":       os.Getenv("AZURE_CLIENT_ID"),
@@ -37,9 +35,9 @@ func main() {
 	accountcreds.Sender = autorest.CreateSender(
 		autorest.WithLogging(log.New(os.Stdout, "example: ", log.LstdFlags)))
 
-	accountcreds.RequestInspector = helpers.withInspection()
-	accountcreds.ResponseInspector = helpers.byInspecting()
-	crg, err := accountcreds.CheckExistence(rgname)
+	accountcreds.RequestInspector = helpers.WithInspection()
+	accountcreds.ResponseInspector = helpers.ByInspecting()
+	// crg, err := accountcreds.CheckExistence(rgname)
 
 	if err != nil {
 		log.Fatalf("Error: %v", err)
