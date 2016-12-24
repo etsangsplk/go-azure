@@ -45,11 +45,12 @@ func main() {
 		return
 	}
 
-responsecode 		:= regexp.MustCompile(`2[0-9]{2}|299`)
-responsemessage := fmt.Printf("'%s'", crg.Response)
 
- if responsecode.FindAllString(responsemessage, -1) == true {
-	 fmt.Printf("=====================\nResource group exists'\n=====================\n")
+responsemessage := fmt.Sprintln("%s", crg.Response)
+responsecode, _	:= regexp.MatchString("2[0-9]{2}|299", responsemessage)
+
+ if responsecode == true {
+	 fmt.Printf("=====================\nResource group exists\n=====================\n")
  } else {  log.Fatalf("=====================\nBad HTTP response code, result is '%s'\n=====================\n", crg.Response)
 	 }
 
