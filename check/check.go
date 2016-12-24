@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 
 	"github.com/glennmate/go-azure/helpers"
   "github.com/Azure/azure-sdk-for-go/arm/resources/resources"
@@ -33,24 +34,24 @@ func main() {
 	accountcreds.Authorizer = serviceprincipaltoken
 
 	accountcreds.Sender = autorest.CreateSender(
-		autorest.WithLogging(log.New(os.Stdout, "example: ", log.LstdFlags)))
+		autorest.WithLogging(log.New(os.Stdout, "=====================\nLogging send request:\n=====================\n", log.LstdFlags)))
 
 	accountcreds.RequestInspector = helpers.WithInspection()
 	accountcreds.ResponseInspector = helpers.ByInspecting()
 	crg, err := accountcreds.CheckExistence(os.Getenv("AZURE_RESOURCE_GROUP_NAME"))
 
 	if err != nil {
-		log.Fatalf("Error: %v", err)
+		log.Fatalf("=====================\nError: %v\n=====================\n", err)
 		return
 	}
 
- fmt.Printf("Status is '%s'\n", crg.Response)
+responsecode 		:= regexp.MustCompile(`2[0-9]{2}|299`)
+responsemessage := fmt.Printf("'%s'", crg.Response)
 
-//  {
-// 	fmt.Printf("The resource group name '%s' is available\n", rgname)
-// } else {
-// 	fmt.Printf("The resource group name '%s' is unavailable because %s\n", rgname, to.String(crg.Message))
-// }
+ if responsecode.FindAllString(responsemessage, -1) == true {
+	 fmt.Printf("=====================\nResource group exists'\n=====================\n")
+ } else {  log.Fatalf("=====================\nBad HTTP response code, result is '%s'\n=====================\n", crg.Response)
+	 }
 
 }
 
@@ -63,7 +64,7 @@ func checkEnvVar(envVars *map[string]string) error {
 		}
 	}
 	if len(missingVars) > 0 {
-		return fmt.Errorf("Missing environment variables %v", missingVars)
+		return fmt.Errorf("\n=====================\nMissing environment variables %v\n=====================\n", missingVars)
 	}
 	return nil
 }
