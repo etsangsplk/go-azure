@@ -34,14 +34,14 @@ func main() {
 	accountcreds.Authorizer = serviceprincipaltoken
 
 	accountcreds.Sender = autorest.CreateSender(
-		autorest.WithLogging(log.New(os.Stdout, "=====================\nLogging send request:\n=====================\n", log.LstdFlags)))
+		autorest.WithLogging(log.New(os.Stdout, "Logging send request:\n", log.LstdFlags)))
 
 	accountcreds.RequestInspector = helpers.WithInspection()
 	accountcreds.ResponseInspector = helpers.ByInspecting()
 	crg, err := accountcreds.CheckExistence(os.Getenv("AZURE_RESOURCE_GROUP_NAME"))
 
 	if err != nil {
-		log.Fatalf("=====================\nError: %v\n=====================\n", err)
+		log.Fatalf("Error: %v\n", err)
 		return
 	}
 
@@ -50,8 +50,8 @@ responsemessage := fmt.Sprintln("%s", crg.Response)
 responsecode, _	:= regexp.MatchString("2[0-9]{2}|299", responsemessage)
 
  if responsecode == true {
-	 fmt.Printf("=====================\nResource group exists\n=====================\n")
- } else {  log.Fatalf("=====================\nBad HTTP response code, result is '%s'\n=====================\n", crg.Response)
+	 fmt.Printf("Resource group exists\n")
+ } else {  log.Fatalf("Bad HTTP response code, result is '%s'\n", crg.Response)
 	 }
 
 }
@@ -65,7 +65,7 @@ func checkEnvVar(envVars *map[string]string) error {
 		}
 	}
 	if len(missingVars) > 0 {
-		return fmt.Errorf("\n=====================\nMissing environment variables %v\n=====================\n", missingVars)
+		return fmt.Errorf("Missing environment variables %v\n", missingVars)
 	}
 	return nil
 }
