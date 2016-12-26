@@ -12,7 +12,7 @@ import (
 func WithInspection() autorest.PrepareDecorator {
 	return func(p autorest.Preparer) autorest.Preparer {
 		return autorest.PreparerFunc(func(r *http.Request) (*http.Request, error) {
-			fmt.Printf("=====================\nInspecting Request: %s %s\n=====================\n", r.Method, r.URL)
+			fmt.Printf("Inspecting Request: %s %s\n", r.Method, r.URL)
 			return p.Prepare(r)
 		})
 	}
@@ -21,8 +21,8 @@ func WithInspection() autorest.PrepareDecorator {
 func ByInspecting() autorest.RespondDecorator {
 	return func(r autorest.Responder) autorest.Responder {
 		return autorest.ResponderFunc(func(resp *http.Response) error {
-			fmt.Printf("=====================\nInspecting Response: %s for %s %s\n=====================\n", resp.Status, resp.Request.Method, resp.Request.URL)
-			return r.Respond(resp)
+			fmt.Printf("Inspecting Response: %s for %s %s\n", resp.Status, resp.Request.Method, resp.Request.URL)
+			return r.Respond(d /c/resp)
 		})
 	}
 }
